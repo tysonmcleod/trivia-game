@@ -1,14 +1,85 @@
 <template>
   <div id="startScreen">
-    <select></select>
+    <label>Name</label>
+    <input @input="onNameChange" type="text" />
+
+    <label>Difficulty</label>
+    <select @change="onDifficultyChange">
+      <option disabled selected>Select a difficulty</option>
+      <option v-for="difficulty in difficulties" :key="difficulty">
+      {{ difficulty }}
+      </option
+    ></select>
+
+    <label>Category</label>
+    <select @change="onCategoryChange">
+      <option disabled selected>Select a category</option>
+      <option v-for="category in getCategories" :key="category.id">
+        {{ category.name }}
+      </option>
+    </select>
+
+    <label>Number of Questions</label>
+    <input @input="onNumberOfQuestionsChange" type="number" min="1" max="50" />
+
+    <button @click="onStartClick">Start Game</button>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 
 export default {
-  name: 'StartScreen'
-}
+  name: "StartScreen",
+  data: function() {
+    return {
+      difficulties: ["easy", "medium", "hard"]
+    }
+  },
+  methods: {
+    ...mapState([
+      "categories"
+    ]),
+    ...mapActions(["fetchCategories"]),
+    ...mapMutations([
+      "setDifficulty",
+      "setCategory",
+      "setNumberOfQuestions",
+      "setName",
+    ]),
+
+    onStartClick() {
+      if (
+        this.$store.state.name !== "" &&
+        this.$store.state.difficulty !== "" &&
+        this.$store.state.category !== "" &&
+        this.$store.state.numberOfQuestions !== 0
+      ) {
+        this.$router.push("/trivia");
+      }
+    },
+    onNameChange(event) {
+      this.setName(event.target.value.trim());
+    },
+    onNumberOfQuestionsChange(event) {
+      let questions = event.target.value;
+      questions = questions > 50 ? 50 : questions < 1 ? 1 : questions;
+      this.setNumberOfQuestions(questions);
+    },
+    onDifficultyChange(event) {
+      this.setDifficulty(event.target.value.trim());
+    },
+    onCategoryChange(event) {
+      this.setCategory(event.target.value);
+    },
+  },
+  computed: {
+    ...mapGetters(["getCategories"]),
+  },
+  created() {
+    this.fetchCategories();
+  },
+};
 </script>
 
 <style>
