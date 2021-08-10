@@ -8,7 +8,6 @@ export default new Vuex.Store({
         triviaQuestions: [],
         answers: [],
         name: "",
-        points: 0,
         difficulty: "",
         category: "",
         numberOfQuestions: 0
@@ -26,9 +25,6 @@ export default new Vuex.Store({
         setName: (state, payload) => {
             state.name = payload;
         },
-        setPoints: (state, payload) => {
-            state.points = payload;
-        },
         setDifficulty: (state, payload) => {
             state.difficulty = payload;
         },
@@ -37,7 +33,9 @@ export default new Vuex.Store({
         }
     },
     getters: {
-
+        getPoints: state => {
+            return [...state.answers.filter(x => x === true)].length * 10;
+        }
     },
     actions: {
 
