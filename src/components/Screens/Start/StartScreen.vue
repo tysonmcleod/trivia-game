@@ -56,6 +56,13 @@ export default {
         this.$store.state.numberOfQuestions !== 0
       ) {
         this.$router.push("/trivia");
+      } else {
+        const message = "You need to enter data for the following fields:\n" +
+        ((this.$store.state.name === "") ? "Name\n" : "") +
+        ((this.$store.state.difficulty === "") ? "Difficulty\n" : "") +
+        ((this.$store.state.category === "") ? "Category\n" : "") +
+        ((this.$store.state.numberOfQuestions === 0) ? "Number of Questions" : "")
+        alert(message);
       }
     },
     onNameChange(event) {
