@@ -7,7 +7,8 @@ export default new Vuex.Store({
     state: {
         triviaQuestions: [],
         answers: [],
-        user: {}
+        name: "",
+        points: 0
     },
     mutations: {
         setTriviaQuestions: (state, payload) => {
@@ -19,17 +20,17 @@ export default new Vuex.Store({
         emptyAnswers: (state) => {
             state.answers = [];
         }, 
-        setUser: (state, payload) => {
-            state.user = payload;
+        setName: (state, payload) => {
+            state.name = payload;
         },
-        setUserPoints: (state, payload) => {
-            state.user.points = payload;
+        setPoints: (state, payload) => {
+            state.points = payload;
         }
     },
     getters: {
 
     },
     actions: {
-        
+
     }
 })
