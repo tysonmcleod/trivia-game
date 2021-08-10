@@ -1,12 +1,12 @@
 <template>
-  <div id="startScreen">
+  <div id="category">
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'StartScreen'
+  name: 'Category'
 }
 </script>
 
