@@ -8,7 +8,10 @@ export default new Vuex.Store({
         triviaQuestions: [],
         answers: [],
         name: "",
-        points: 0
+        points: 0,
+        difficulty: "",
+        category: "",
+        numberOfQuestions: 0
     },
     mutations: {
         setTriviaQuestions: (state, payload) => {
@@ -25,6 +28,12 @@ export default new Vuex.Store({
         },
         setPoints: (state, payload) => {
             state.points = payload;
+        },
+        setDifficulty: (state, payload) => {
+            state.difficulty = payload;
+        },
+        setNumberOfQuestions: (state, payload) => {
+            state.numberOfQuestions = payload;
         }
     },
     getters: {
