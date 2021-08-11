@@ -1,6 +1,10 @@
 # TriviaGame
-Creating a trivia game using Vue.js 
+Creating a trivia game using Vue.js
 
+To fetch data from the Vuex store the following code can be used:
+* this.$store.state.difficulty
+* this.$store.state.category
+* this.$store.state.numberOfQuestions
 
 ## Project setup
 ```
