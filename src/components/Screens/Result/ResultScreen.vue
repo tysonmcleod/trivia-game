@@ -1,12 +1,17 @@
 <template>
-  <div id="result-container">
-    <ul v-for="index in getQuestions().length" :key="index">
-      <li>
-        <span :class="[getClass(index - 1), 'question-text']">{{
-          getQuestions()[index - 1]
-        }}</span>
-      </li>
-    </ul>
+  <div id="result">
+    <div id="result-container" v-for="index in getQuestions().length" :key="index">
+      <div id="correct-column" v-if="getResult()[index - 1] === true">
+        <span :class="['correct', 'question-text']">
+          {{ getQuestions()[index - 1] }}
+        </span>
+      </div>
+      <div id="wrong-column" v-else>
+        <span :class="['wrong', 'question-text']">
+          {{ getQuestions()[index - 1] }}
+        </span>
+      </div>
+    </div>
     <footer>
       <button id="home-button" @click="onHomeClick">Home</button>
       <button id="restart-button" @click="onRestartClick">Restart</button>
@@ -32,15 +37,21 @@ export default {
       this.$router.push("/");
     },
     getQuestions() {
-      const QUESTIONS = [
-        "Is pie flat?",
-        "What are you waiting for?",
-        "Some stuff happened, what?",
-        "Is the earth not flat?",
-        "True?",
-      ];
+      const QUESTIONS =
+        //this.$store.state.triviaQuestions;
+        [
+          "Is pie flat?",
+          "What are you waiting for?",
+          "Some stuff happened, what?",
+          "Is the earth not flat?",
+          "True?",
+        ];
       const points = this.getPoints();
-      this.setHeaderText(`Congratulations! You scored ${points} / ${QUESTIONS.length * 10} points`);
+      this.setHeaderText(
+        `Congratulations! You scored ${points} / ${
+          QUESTIONS.length * 10
+        } points`
+      );
       return QUESTIONS;
     },
     getResult() {
@@ -54,23 +65,34 @@ export default {
 </script>
 
 <style scoped>
+#result {
+
+}
+
 #result-container {
-  position: relative;
+  width: 100%;
 }
 
 footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;  
+  height: 2.5rem;
 }
+
+#home-button, #restart-button {
+  min-width: 5rem;
+  width: 10vw;
+  height: auto;
+}
+
 #home-button {
-  margin-left: 2rem;
-  margin-bottom: 0;
+  margin-left: 4rem;
+  float: left;
 }
 #restart-button {
-  margin-bottom: 0;
-  margin-right: 2rem;
+  margin-right: 4rem;
+  float: right;
 }
 
 .correct {
