@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { TriviaAPI } from "@/components/Screens/trivia/TriviaAPI";
+import { TriviaAPI } from "@/api/trivia/TriviaAPI";
 
 Vue.use(Vuex);
 
@@ -46,6 +46,9 @@ export default new Vuex.Store({
         },
         getPoints: state => {
             return [...state.answers.filter(x => x === true)].length * 10;
+        },
+        getTriviaQuestions: state => {
+            return state.triviaQuestions;
         }
     },
     actions: {
@@ -53,6 +56,15 @@ export default new Vuex.Store({
             try {
                 const categories = await TriviaAPI.fetchCategories();
                 commit("setCategories", categories)
+            } catch (error) {
+                commit("setError", error.message);
+            }
+        },
+        async fetchQuestions({ commit }){
+            try {
+                const preferences = [10, 12, "easy"];
+                const questions = await TriviaAPI.fetchQuestions(preferences);
+                commit("setTriviaQuestions", questions)
             } catch (error) {
                 commit("setError", error.message);
             }

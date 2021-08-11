@@ -55,6 +55,7 @@ export default {
         this.$store.state.category !== "" &&
         this.$store.state.numberOfQuestions !== 0
       ) {
+        this.$store.dispatch('fetchQuestions');
         this.$router.push("/trivia");
       } else {
 
