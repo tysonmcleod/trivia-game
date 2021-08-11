@@ -71,6 +71,7 @@ export default {
 
 #result-container {
   width: 100%;
+  margin: 1rem;
 }
 
 footer {
@@ -95,15 +96,18 @@ footer {
   float: right;
 }
 
-.correct {
+.correct, .wrong {
   width: 0;
-  border: 2px solid lightgreen;
+}
+
+.correct {
+  background-color: lightgreen;
 }
 .wrong {
-  width: 0;
-  border: 2px solid red;
+  background-color: red;
 }
 .question-text {
+  padding: 1rem;
   font-size: 24px;
 }
 </style>
