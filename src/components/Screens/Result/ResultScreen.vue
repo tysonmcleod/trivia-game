@@ -14,7 +14,7 @@
     </div>
     <footer>
       <button id="home-button" @click="onHomeClick">Home</button>
-      <button id="restart-button" @click="onRestartClick">Restart</button>
+      <button id="restart-button" @click="onRestartClick">Restart Game</button>
     </footer>
   </div>
 </template>
@@ -66,25 +66,38 @@ export default {
 
 <style scoped>
 #result {
-
+  text-align: center;
 }
 
 #result-container {
-  width: 100%;
-  margin: 1rem;
+  display: inline-flexbox;
 }
 
 footer {
   position: absolute;
-  bottom: 0;
+  bottom: 5px;
   width: 100%;
   height: 2.5rem;
+}
+
+#wrong-column, #correct-column {
+  position: relative;
+  margin-bottom: 1rem;
+  width: 50%;
+}
+
+#wrong-column {
+  float: left;
+}
+
+#correct-column {
+  float: right;
 }
 
 #home-button, #restart-button {
   min-width: 5rem;
   width: 10vw;
-  height: auto;
+  height: 7vh;
 }
 
 #home-button {
@@ -107,7 +120,7 @@ footer {
   background-color: red;
 }
 .question-text {
-  padding: 1rem;
+  padding: 0.5rem;
   font-size: 24px;
 }
 </style>
