@@ -1,20 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Category from "../components/Screens/Start/Category.vue";
 import StartScreen from "../components/Screens/Start/StartScreen.vue";
+import ResultScreen from "../components/Screens/Result/ResultScreen.vue";
+import QuestionScreen from "@/components/Screens/QuestionScreen.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
     {
-        path: "/home",
+        path: "/",
         name: "Home",
         component: StartScreen
     },
     {
-        path: "/categories",
-        name: "Category",
-        component: Category
+        path: "/result",
+        name: "Result",
+        component: ResultScreen
+    },
+    {
+        path: "/trivia",
+        name: "Trivia",
+        component: QuestionScreen
     }
 ]
 

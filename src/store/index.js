@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { TriviaAPI } from "@/components/Screens/trivia/TriviaAPI";
+import { TriviaAPI } from "@/api/trivia/TriviaAPI";
 
 Vue.use(Vuex);
 
@@ -12,11 +12,15 @@ export default new Vuex.Store({
         difficulty: "",
         category: "",
         numberOfQuestions: 0,
-        categories: []
+        categories: [],
+        headerText: ""
     },
     mutations: {
         setTriviaQuestions: (state, payload) => {
             state.triviaQuestions = payload;
+        },
+        setHeaderText: (state, payload) => {
+            state.headerText = payload;
         },
         setCategories: (state, payload) => {
             state.categories = payload;
@@ -29,7 +33,7 @@ export default new Vuex.Store({
         },
         emptyAnswers: (state) => {
             state.answers = [];
-        }, 
+        },
         setName: (state, payload) => {
             state.name = payload;
         },
@@ -38,6 +42,12 @@ export default new Vuex.Store({
         },
         setNumberOfQuestions: (state, payload) => {
             state.numberOfQuestions = payload;
+        },
+        resetStore: (state) => {
+            state.category = -1;
+            state.numberOfQuestions = 0;
+            state.difficulty = "";
+            state.name = "";
         }
     },
     getters: {
@@ -45,14 +55,16 @@ export default new Vuex.Store({
             return state.categories;
         },
         getPoints: state => {
-            return [...state.answers.filter(x => x === true)].length * 10;
+            return state.answers.reduce((p, c) => {
+                p += (c === true) ? 10 : 0;
+            }, 0);
         }
     },
     actions: {
         async fetchCategories({ commit }) {
             try {
                 const categories = await TriviaAPI.fetchCategories();
-                commit("setCategories", categories)
+                commit("setCategories", categories);
             } catch (error) {
                 commit("setError", error.message);
             }

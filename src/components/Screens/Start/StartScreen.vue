@@ -13,8 +13,8 @@
 
     <label>Category</label>
     <select @change="onCategoryChange">
-      <option disabled selected>Select a category</option>
-      <option v-for="category in getCategories" :key="category.id">
+      <option selected :value="-1">Mixed</option>
+      <option v-for="category in getCategories" :value="category.id" :key="category.id">
         {{ category.name }}
       </option>
     </select>
@@ -46,13 +46,13 @@ export default {
       "setCategory",
       "setNumberOfQuestions",
       "setName",
+      "setHeaderText"
     ]),
 
     onStartClick() {
       if (
         this.$store.state.name !== "" &&
         this.$store.state.difficulty !== "" &&
-        this.$store.state.category !== "" &&
         this.$store.state.numberOfQuestions !== 0
       ) {
         this.$router.push("/trivia");
@@ -61,7 +61,6 @@ export default {
         const message = "You need to enter data for the following fields:" +
         ((this.$store.state.name === "") ? "\nName" : "") +
         ((this.$store.state.difficulty === "") ? "\nDifficulty" : "") +
-        ((this.$store.state.category === "") ? "\nCategory" : "") +
         ((this.$store.state.numberOfQuestions === 0) ? "\nNumber of Questions" : "")
 
         alert(message);
@@ -79,14 +78,16 @@ export default {
       this.setDifficulty(event.target.value.trim());
     },
     onCategoryChange(event) {
+      console.log(event.target.value);
       this.setCategory(event.target.value);
     },
   },
   computed: {
-    ...mapGetters(["getCategories"]),
+    ...mapGetters(["getCategories"])
   },
   created() {
-    this.fetchCategories();
+      this.fetchCategories();
+      this.setHeaderText("Welcome to QuizGame Deluxe");
   },
 };
 </script>
