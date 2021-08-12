@@ -1,18 +1,12 @@
 <template>
-  <div id='questionScreen'>
-    <div id="questions" v-if="triviaQuestions[currentQuestion]">
-      <h3>Question: {{currentQuestion+1}}</h3>
-      <div id="multiple-choice" v-if="triviaQuestions[currentQuestion].type === 'multiple' ">
-        <p class="question" v-html="triviaQuestions[currentQuestion].question"></p> 
-        <button class="answer" @click="onAnswerClick(triviaQuestions[currentQuestion].incorrect_answers[0])">{{triviaQuestions[currentQuestion].incorrect_answers[0]}}</button>
-        <button class="answer" @click="onAnswerClick(triviaQuestions[currentQuestion].incorrect_answers[1])">{{triviaQuestions[currentQuestion].incorrect_answers[1]}}</button>
-        <button class="answer" @click="onAnswerClick(triviaQuestions[currentQuestion].incorrect_answers[2])" >{{triviaQuestions[currentQuestion].incorrect_answers[2]}}</button>
-        <button class="answer" @click="onAnswerClick(triviaQuestions[currentQuestion].correct_answer)" >{{triviaQuestions[currentQuestion].correct_answer}}</button>
+  <div class='question-screen'>
+    <div class="question-body" v-if="triviaQuestions[currentQuestion]">
+      <div class="question-header">
+        <h3>Question: {{currentQuestion+1}}</h3>        
+        <p class="question" v-html="triviaQuestions[currentQuestion].question"></p>
       </div>
-      <div id="true-false" v-else>
-        <p class="question" v-html="triviaQuestions[currentQuestion].question"></p> 
-        <button class="answer" @click="onAnswerClick(triviaQuestions[currentQuestion].incorrect_answers[0])">{{triviaQuestions[currentQuestion].incorrect_answers[0]}}</button>
-        <button class="answer" @click="onAnswerClick(triviaQuestions[currentQuestion].correct_answer)">{{triviaQuestions[currentQuestion].correct_answer}}</button>
+      <div class="button-group">
+        <button v-for="question in currentQuestionAnswers" :key="question" class="answer" @click="onAnswerClick($event)" v-html="question"/>
       </div>
     </div>
   </div>
@@ -25,6 +19,7 @@ export default {
   data: function() {
     return {
       currentQuestion: 0,
+      currentQuestionAnswers:[]
     }
   },
   methods: {
@@ -36,10 +31,24 @@ export default {
       if(this.currentQuestion === this.triviaQuestions.length){
         this.$router.push("/result");
       }
+      this.addAnswers();
+    },
+    addAnswers(){
+      let answers = [this.triviaQuestions[this.currentQuestion].correct_answer];
+      for(let i = 0; i < this.triviaQuestions[this.currentQuestion].incorrect_answers.length; ++i){
+        answers.push(this.triviaQuestions[this.currentQuestion].incorrect_answers[i]);
+      }
+      this.currentQuestionAnswers = answers;
+      this.currentQuestionAnswers.sort(() => (Math.random() > .5) ? 1: -1);
     }
   },
   computed: {
     ...mapState(["triviaQuestions", "userName", "answers"])
+  },
+  watch:{
+    triviaQuestions: function(){
+      this.addAnswers();
+    }
   },
   created() {
     if(this.userName === "") {
@@ -51,35 +60,45 @@ export default {
 </script>
 
 <style scoped>
-#questionScreen{
-  margin-top: 20%;
-  border: 2px solid black;
-  border-radius: 5%;
-  margin-left:auto;
-  margin-right:auto;
-  width:50%;
-  padding: 3%;
+.question-screen{
+  padding: 0;
 }
-.answer{
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 10px;
-  border: 2px solid black;
-  height: 50px;
-  display:flex;
+.question-body{
+  background-color: #f2e8e8;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 50%;
+  height: 50%;
+}
+.question-header{
+  overflow: hidden;
+  background-color: #F37676;
+  padding: 20px 10px;
+}
+.question-header h3{
+  font-size: 30px;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
 }
 .question{
-  font-size: 30px;
-  width: 50%;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  font-size: 20px;
+  font-weight: 500;
+}
+.button-group button{
+  background-color: #ffffff; 
+  padding:16px 31px;
+  color: #000000; 
+  cursor: pointer;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5%;
+  display: inline-block; 
+  font-size: 32px;
 }
-#questionScreen h3{
-  font-size: 50px;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  color: #0b035383;
-}
+
 </style>
