@@ -1,18 +1,11 @@
 <template>
-  <div class="grid-container" id="result">
-    <div id="result-container" v-for="index in getQuestions().length" :key="index">
-      <div class="grid-item correct-row" v-if="getResult()[index - 1] === true">
-        <span :class="['correct', 'question-text']">
-          {{ getQuestions()[index - 1] }} ✓
-        </span>
-      </div>
-      <div class="grid-item wrong-row" v-else>
-        <span :class="['wrong', 'question-text']">
-          {{ getQuestions()[index - 1] }} ❌
-        </span>
+  <div id="result">
+    <div class="grid-container">
+      <div id="result-container" v-for="(question, index) of triviaQuestions" :key="index">
+        <p :class="[isAnswerCorrect(index) ? 'correct' : 'wrong','question-text','grid-item',]">{{ question.question }}</p>
       </div>
     </div>
-    <footer class="grid-item">
+    <footer>
       <button id="home-button" @click="onHomeClick">Home</button>
       <button id="restart-button" @click="onRestartClick">Restart Game</button>
     </footer>
@@ -35,58 +28,62 @@ export default {
       this.emptyAnswers(event.target.value);
       this.$router.push("/");
     },
-    getQuestions() {
-      const QUESTIONS =
-        [
-          "Is pie flat?",
-          "What are you waiting for?",
-          "Some stuff happened, what?",
-          "Is the earth not flat?",
-          "True?",
-          "Buttons!",
-          "What does the fridget say?",
-          "Test test?",
-          "Ich!"
-        ];
-      this.setHeaderText(
-        `Congratulations! You scored ${this.getPoints} / ${
-          QUESTIONS.length * 10
-        } points`
-      );
-      return QUESTIONS;
-    },
-    getResult() {
-      return [true, false, true, true, true, false, false, true, false];
+  },
+  created() {
+    if (this.userName === "") {
+      this.$router.push("/");
     }
+    this.setHeaderText(
+      `Congratulations! You scored ${this.getPoints} / ${
+        this.triviaQuestions.length * 10
+      } points`
+    );
   },
   computed: {
-    ...mapState(["triviaQuestions", "answers"]),
-    ...mapGetters(["getPoints"])
-  }
+    ...mapState([
+      "triviaQuestions",
+      "answers",
+      "numberOfQuestions",
+      "userName",
+    ]),
+    ...mapGetters(["getPoints", "isAnswerCorrect"]),
+  },
 };
 </script>
 
 <style scoped>
-
 #result {
   margin: 0 1rem;
   height: 100%;
+  text-align: center;
 }
 
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(4, 2fr);
+  display: inline-grid;
+  grid-template-columns: auto auto;
   grid-auto-rows: minmax(4rem);
+  margin-bottom: 2rem;
+  gap: 1ch;
 }
 
 footer {
-  grid-row: -1;
+  position: fixed;
+  width: 90%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  bottom: 0;
 }
 
-#home-button, #restart-button {
+#home-button,
+#restart-button {
+  position: relative;
   min-width: 5rem;
   width: 10vw;
   height: 7vh;
+}
+
+#result-container {
+  padding: 0;
 }
 
 #home-button {
@@ -96,16 +93,20 @@ footer {
   float: right;
 }
 
-.correct, .wrong {
+.correct,
+.wrong {
+  border: 1px solid black;
   border-radius: 20px;
   padding: 1rem;
+  margin: 0;
 }
 
 .correct {
   background-color: lightgreen;
 }
 .wrong {
-  background-color: red;
+  background-color: crimson;
+  color: white;
 }
 .question-text {
   font-size: 18px;

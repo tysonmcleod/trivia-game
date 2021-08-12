@@ -10,7 +10,7 @@ export default new Vuex.Store({
         answers: [],
         userName: "",
         difficulty: "",
-        category: "",
+        category: -1,
         numberOfQuestions: 0,
         categories: [],
         headerText: ""
@@ -51,12 +51,12 @@ export default new Vuex.Store({
         }
     },
     getters: {
-        isAnswerCorrect: (state, index) => {
+        isAnswerCorrect: (state) => (index) => {
             return state.answers[index] === state.triviaQuestions[index].correct_answer;
         },
         getPoints: state => {
-            return state.answers.reduce((p, c) => {
-                p += (c === true) ? 10 : 0;
+            return state.answers.reduce((pre, cur, i) => {
+                return pre + ((state.answers[i] === state.triviaQuestions[i].correct_answer) ? 10 : 0);
             }, 0);
         }
     },
@@ -69,7 +69,7 @@ export default new Vuex.Store({
                 commit("setError", error.message);
             }
         },
-        async fetchQuestions({ commit, state }){
+        async fetchQuestions({ commit, state }) {
             try {
                 const preferences = [state.numberOfQuestions, state.category, state.difficulty];
                 const questions = await TriviaAPI.fetchQuestions(preferences);
