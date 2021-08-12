@@ -1,18 +1,18 @@
 <template>
-  <div id="result">
+  <div class="grid-container" id="result">
     <div id="result-container" v-for="index in getQuestions().length" :key="index">
-      <div id="correct-column" v-if="getResult()[index - 1] === true">
+      <div class="grid-item correct-row" v-if="getResult()[index - 1] === true">
         <span :class="['correct', 'question-text']">
-          {{ getQuestions()[index - 1] }}
+          {{ getQuestions()[index - 1] }} ✓
         </span>
       </div>
-      <div id="wrong-column" v-else>
+      <div class="grid-item wrong-row" v-else>
         <span :class="['wrong', 'question-text']">
-          {{ getQuestions()[index - 1] }}
+          {{ getQuestions()[index - 1] }} ❌
         </span>
       </div>
     </div>
-    <footer>
+    <footer class="grid-item">
       <button id="home-button" @click="onHomeClick">Home</button>
       <button id="restart-button" @click="onRestartClick">Restart Game</button>
     </footer>
@@ -20,12 +20,11 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 
 export default {
   name: "ResultScreen",
   methods: {
-    ...mapGetters(["getPoints"]),
     ...mapMutations(["resetStore", "emptyAnswers", "setHeaderText"]),
     onRestartClick(event) {
       this.emptyAnswers(event.target.value);
@@ -38,60 +37,50 @@ export default {
     },
     getQuestions() {
       const QUESTIONS =
-        //this.$store.state.triviaQuestions;
         [
           "Is pie flat?",
           "What are you waiting for?",
           "Some stuff happened, what?",
           "Is the earth not flat?",
           "True?",
+          "Buttons!",
+          "What does the fridget say?",
+          "Test test?",
+          "Ich!"
         ];
-      const points = this.getPoints();
       this.setHeaderText(
-        `Congratulations! You scored ${points} / ${
+        `Congratulations! You scored ${this.getPoints} / ${
           QUESTIONS.length * 10
         } points`
       );
       return QUESTIONS;
     },
     getResult() {
-      return [true, false, true, true, true];
-    },
-    getClass(index) {
-      return this.getResult()[index] ? "correct" : "wrong";
-    },
+      return [true, false, true, true, true, false, false, true, false];
+    }
   },
+  computed: {
+    ...mapState(["triviaQuestions", "answers"]),
+    ...mapGetters(["getPoints"])
+  }
 };
 </script>
 
 <style scoped>
+
 #result {
-  text-align: center;
+  margin: 0 1rem;
+  height: 100%;
 }
 
-#result-container {
-  display: inline-flexbox;
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 2fr);
+  grid-auto-rows: minmax(4rem);
 }
 
 footer {
-  position: absolute;
-  bottom: 5px;
-  width: 100%;
-  height: 2.5rem;
-}
-
-#wrong-column, #correct-column {
-  position: relative;
-  margin-bottom: 1rem;
-  width: 50%;
-}
-
-#wrong-column {
-  float: left;
-}
-
-#correct-column {
-  float: right;
+  grid-row: -1;
 }
 
 #home-button, #restart-button {
@@ -101,16 +90,15 @@ footer {
 }
 
 #home-button {
-  margin-left: 4rem;
   float: left;
 }
 #restart-button {
-  margin-right: 4rem;
   float: right;
 }
 
 .correct, .wrong {
-  width: 0;
+  border-radius: 20px;
+  padding: 1rem;
 }
 
 .correct {
@@ -120,7 +108,6 @@ footer {
   background-color: red;
 }
 .question-text {
-  padding: 0.5rem;
-  font-size: 24px;
+  font-size: 18px;
 }
 </style>

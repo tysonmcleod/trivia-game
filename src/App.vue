@@ -16,11 +16,12 @@ export default {
 body {
   margin: 0;
   background-color: #F2E8E8;
+  height: 100%;
+  width: 100%;
 }
 header {
   background-color: #F37676;
   position: relative;
-
   height: 15vh;
   min-height: 6rem;
   margin-bottom: 2rem;

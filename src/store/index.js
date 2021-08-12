@@ -8,7 +8,7 @@ export default new Vuex.Store({
     state: {
         triviaQuestions: [],
         answers: [],
-        name: "",
+        userName: "",
         difficulty: "",
         category: "",
         numberOfQuestions: 0,
@@ -35,7 +35,7 @@ export default new Vuex.Store({
             state.answers = [];
         },
         setName: (state, payload) => {
-            state.name = payload;
+            state.userName = payload;
         },
         setDifficulty: (state, payload) => {
             state.difficulty = payload;
@@ -47,12 +47,12 @@ export default new Vuex.Store({
             state.category = -1;
             state.numberOfQuestions = 0;
             state.difficulty = "";
-            state.name = "";
+            state.userName = "";
         }
     },
     getters: {
-        getCategories: state => {
-            return state.categories;
+        isAnswerCorrect: (state, index) => {
+            return state.answers[index] === state.triviaQuestions[index].correct_answer;
         },
         getPoints: state => {
             return state.answers.reduce((p, c) => {

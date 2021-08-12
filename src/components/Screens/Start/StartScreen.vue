@@ -7,14 +7,18 @@
     <select @change="onDifficultyChange">
       <option disabled selected>Select a difficulty</option>
       <option v-for="difficulty in difficulties" :key="difficulty">
-      {{ difficulty }}
-      </option
-    ></select>
+        {{ difficulty }}
+      </option>
+    </select>
 
     <label>Category</label>
     <select @change="onCategoryChange">
       <option selected :value="-1">Mixed</option>
-      <option v-for="category in getCategories" :value="category.id" :key="category.id">
+      <option
+        v-for="category in categories"
+        :value="category.id"
+        :key="category.id"
+      >
         {{ category.name }}
       </option>
     </select>
@@ -27,41 +31,40 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "StartScreen",
-  data: function() {
+  data: function () {
     return {
-      difficulties: ["easy", "medium", "hard"]
-    }
+      difficulties: ["easy", "medium", "hard"],
+    };
   },
   methods: {
-    ...mapState([
-      "categories"
-    ]),
     ...mapActions(["fetchCategories"]),
     ...mapMutations([
       "setDifficulty",
       "setCategory",
       "setNumberOfQuestions",
       "setName",
-      "setHeaderText"
+      "setHeaderText",
     ]),
 
     onStartClick() {
       if (
-        this.$store.state.name !== "" &&
-        this.$store.state.difficulty !== "" &&
-        this.$store.state.numberOfQuestions !== 0
+        this.userName !== "" &&
+        this.difficulty !== "" &&
+        this.numberOfQuestions !== 0
       ) {
         this.$router.push("/trivia");
       } else {
-
-        const message = "You need to enter data for the following fields:" +
-        ((this.$store.state.name === "") ? "\nName" : "") +
-        ((this.$store.state.difficulty === "") ? "\nDifficulty" : "") +
-        ((this.$store.state.numberOfQuestions === 0) ? "\nNumber of Questions" : "")
+        const message =
+          "You need to enter data for the following fields:" +
+          (this.userName === "" ? "\nName" : "") +
+          (this.difficulty === "" ? "\nDifficulty" : "") +
+          (this.numberOfQuestions === 0
+            ? "\nNumber of Questions"
+            : "");
 
         alert(message);
       }
@@ -78,16 +81,15 @@ export default {
       this.setDifficulty(event.target.value.trim());
     },
     onCategoryChange(event) {
-      console.log(event.target.value);
       this.setCategory(event.target.value);
     },
   },
   computed: {
-    ...mapGetters(["getCategories"])
+    ...mapState(["categories", "userName", "difficulty", "numberOfQuestions"]),
   },
   created() {
-      this.fetchCategories();
-      this.setHeaderText("Welcome to QuizGame Deluxe");
+    this.fetchCategories();
+    this.setHeaderText("Welcome to QuizGame Deluxe");
   },
 };
 </script>
