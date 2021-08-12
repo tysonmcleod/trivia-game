@@ -1,12 +1,9 @@
 <template>
   <div class="grid-container" id="result">
-    <div id="result-container" v-for="question in triviaQuestions" :key="question">
-        <span v-if="isAnswerCorrect(index++) === true" :class="['correct', 'question-text', 'grid-item']">
-          {{ question.question }} ✓
-        </span>
-        <span v-else :class="['wrong', 'question-text', 'grid-item']">
-          {{ question.question }} ❌
-        </span>
+    <div id="result-container" v-for="(question, index) of triviaQuestions" :key="index">
+        <p :class="[isAnswerCorrect(index) ? 'correct' : 'wrong' ,'question-text', 'grid-item']">
+          {{ question.question }} ✓ ❌
+        </p>
     </div>
     <footer class="grid-item">
       <button id="home-button" @click="onHomeClick">Home</button>
@@ -20,11 +17,6 @@ import { mapGetters, mapMutations, mapState } from "vuex";
 
 export default {
   name: "ResultScreen",
-  data: function() {
-    return {
-      index: 0
-    }
-  },
   methods: {
     ...mapMutations(["resetStore", "emptyAnswers", "setHeaderText"]),
     onRestartClick(event) {
@@ -35,7 +27,7 @@ export default {
       this.resetStore(event.target.value);
       this.emptyAnswers(event.target.value);
       this.$router.push("/");
-    },
+    }
   },
   created() {
     if(this.userName === "") {
