@@ -30,8 +30,9 @@ export default {
       this.currentQuestion++;
       if(this.currentQuestion === this.triviaQuestions.length){
         this.$router.push("/result");
+      } else {
+        this.addAnswers();
       }
-      this.addAnswers();
     },
     addAnswers(){
       let answers = [this.triviaQuestions[this.currentQuestion].correct_answer];
