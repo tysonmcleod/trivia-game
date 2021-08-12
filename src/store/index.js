@@ -10,7 +10,7 @@ export default new Vuex.Store({
         answers: [],
         userName: "",
         difficulty: "",
-        category: "",
+        category: -1,
         numberOfQuestions: 0,
         categories: [],
         headerText: ""
@@ -51,8 +51,8 @@ export default new Vuex.Store({
         }
     },
     getters: {
-        isAnswerCorrect: (state, index) => {
-            return state.answers[index] === state.triviaQuestions[index].correct_answer;
+        isAnswerCorrect: (state) => (index) => {
+            return state.answers[index - 1] === state.triviaQuestions[index - 1].correct_answer;
         },
         getPoints: state => {
             return state.answers.reduce((p, c) => {

@@ -1,14 +1,14 @@
 <template>
   <div class="grid-container" id="result">
-    <div id="result-container" v-for="index in getQuestions().length" :key="index">
-      <div class="grid-item correct-row" v-if="getResult()[index - 1] === true">
+    <div id="result-container" v-for="index of numberOfQuestions" :key="index">
+      <div class="grid-item correct-row" v-if="isAnswerCorrect(index) === true">
         <span :class="['correct', 'question-text']">
-          {{ getQuestions()[index - 1] }} ✓
+          {{ triviaQuestions[index - 1].question }} ✓
         </span>
       </div>
       <div class="grid-item wrong-row" v-else>
         <span :class="['wrong', 'question-text']">
-          {{ getQuestions()[index - 1] }} ❌
+          {{ triviaQuestions[index - 1].question }} ❌
         </span>
       </div>
     </div>
@@ -35,33 +35,17 @@ export default {
       this.emptyAnswers(event.target.value);
       this.$router.push("/");
     },
-    getQuestions() {
-      const QUESTIONS =
-        [
-          "Is pie flat?",
-          "What are you waiting for?",
-          "Some stuff happened, what?",
-          "Is the earth not flat?",
-          "True?",
-          "Buttons!",
-          "What does the fridget say?",
-          "Test test?",
-          "Ich!"
-        ];
-      this.setHeaderText(
+  },
+  completed() {
+    this.setHeaderText(
         `Congratulations! You scored ${this.getPoints} / ${
-          QUESTIONS.length * 10
+          this.triviaQuestions.length * 10
         } points`
       );
-      return QUESTIONS;
-    },
-    getResult() {
-      return [true, false, true, true, true, false, false, true, false];
-    }
   },
   computed: {
-    ...mapState(["triviaQuestions", "answers"]),
-    ...mapGetters(["getPoints"])
+    ...mapState(["triviaQuestions", "answers", "numberOfQuestions"]),
+    ...mapGetters(["getPoints", "isAnswerCorrect"])
   }
 };
 </script>

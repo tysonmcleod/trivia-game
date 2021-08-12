@@ -56,7 +56,6 @@ export default {
         this.difficulty !== "" &&
         this.numberOfQuestions !== 0
       ) {
-        this.$store.dispatch('fetchQuestions');
         this.$router.push("/trivia");
       } else {
         const message =

@@ -13,14 +13,13 @@ export const TriviaAPI = {
         }
     },
     async fetchQuestions (preferences) {
-        let API_URL = BASE_URL+(preferences[0])+((preferences[1] === -1) ?
+        let API_URL = BASE_URL+(preferences[0])+((preferences[1] !== -1) ?
             ("&category=")+(preferences[1]) : "") + ("&difficulty=")+(preferences[2]);
             console.log(API_URL);
         try{
-            let response = await fetch(API_URL);
-            this.questions = await response.json();
-            console.log(this.questions.results)
-            return this.questions.results
+            const response = await fetch(API_URL);
+            const questions = await response.json();
+            return questions.results;
         } catch (error) {
             console.log(error.message);
         }  

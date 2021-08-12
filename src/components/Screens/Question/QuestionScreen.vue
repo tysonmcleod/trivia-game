@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "QuestionScreen",
   components:{
@@ -30,12 +30,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["fetchQuestions"]),
     ...mapMutations(["addAnswer"]),
     onAnswerClick(event){
       this.currentQuestion++;
       this.addAnswer(event.target.value);
       if(this.currentQuestion == this.triviaQuestions.length){
-        console.log("its over");
         this.$router.push("/result");
       }
     }
@@ -43,9 +43,8 @@ export default {
   computed: {
     ...mapState(["triviaQuestions"])
   },
- 
-  created() { 
-    console.log(this.triviaQuestions);
+  created() {
+    this.fetchQuestions();
   }
 }
 </script>
