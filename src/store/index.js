@@ -69,9 +69,9 @@ export default new Vuex.Store({
                 commit("setError", error.message);
             }
         },
-        async fetchQuestions({ commit }){
+        async fetchQuestions({ commit, state }){
             try {
-                const preferences = [10, 12, "easy"];
+                const preferences = [state.numberOfQuestions, state.category, state.difficulty];
                 const questions = await TriviaAPI.fetchQuestions(preferences);
                 commit("setTriviaQuestions", questions)
             } catch (error) {

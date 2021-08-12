@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "QuestionScreen",
   components:{
@@ -30,7 +30,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchQuestions"]),
     ...mapMutations(["addAnswer"]),
     onAnswerClick(event){
       this.currentQuestion++;
