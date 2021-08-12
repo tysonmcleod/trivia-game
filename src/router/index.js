@@ -2,12 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import StartScreen from "../components/Screens/Start/StartScreen.vue";
 import ResultScreen from "../components/Screens/Result/ResultScreen.vue";
-<<<<<<< HEAD
 import QuestionScreen from "@/components/Screens/Question/QuestionScreen.vue";
-=======
-import QuestionScreen from "@/components/Screens/QuestionScreen.vue";
 
->>>>>>> robin-dev-result
 Vue.use(VueRouter);
 
 const routes = [
