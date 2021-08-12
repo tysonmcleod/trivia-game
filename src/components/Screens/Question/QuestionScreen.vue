@@ -6,7 +6,7 @@
         <p class="question" v-html="triviaQuestions[currentQuestion].question"></p>
       </div>
       <div class="button-group">
-        <button v-for="question in currentQuestionAnswers" :key="question" class="answer" @click="onAnswerClick($event)" v-html="question"/>
+        <button v-for="question in currentQuestionAnswers" :key="question" class="answer" @click="onAnswerClick(question)" v-html="question"/>
       </div>
     </div>
   </div>
@@ -26,8 +26,8 @@ export default {
     ...mapActions(["fetchQuestions"]),
     ...mapMutations(["addAnswer"]),
     onAnswerClick(value){
-      this.currentQuestion++;
       this.addAnswer(value);
+      this.currentQuestion++;
       if(this.currentQuestion === this.triviaQuestions.length){
         this.$router.push("/result");
       }

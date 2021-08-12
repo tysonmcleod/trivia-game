@@ -20,10 +20,10 @@ export const TriviaAPI = {
             const questions = await response.json();
             return questions.results.map(tQuestion => {
                 return {
-                    question: Buffer.from(tQuestion.question, "base64"),
-                    correct_answer: Buffer.from(tQuestion.correct_answer, "base64"),
+                    question: new TextDecoder().decode(Buffer.from(tQuestion.question, "base64")),
+                    correct_answer: new TextDecoder().decode(Buffer.from(tQuestion.correct_answer, "base64")),
                     incorrect_answers: tQuestion.incorrect_answers.map(wrongAnswer => {
-                        return Buffer.from(wrongAnswer, "base64");
+                        return new TextDecoder().decode(Buffer.from(wrongAnswer, "base64"));
                     })
                 }
             })
