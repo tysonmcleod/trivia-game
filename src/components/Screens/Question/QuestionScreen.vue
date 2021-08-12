@@ -1,25 +1,25 @@
 <template>
   <div id='questionScreen'>
-    <div id="questions" v-if="getTriviaQuestions[currentQuestion]">
+    <div id="questions" v-if="triviaQuestions[currentQuestion]">
       <h3>Question: {{currentQuestion+1}}</h3>
-      <div id="multiple-choice" v-if="getTriviaQuestions[currentQuestion].type === 'multiple' ">
-        <p id="question" v-html="getTriviaQuestions[currentQuestion].question"></p> 
-        <button class="answer" @click="onAnswerClick($event)">{{getTriviaQuestions[currentQuestion].incorrect_answers[0]}}</button>
-        <button class="answer" @click="onAnswerClick($event)">{{getTriviaQuestions[currentQuestion].incorrect_answers[1]}}</button>
-        <button class="answer" @click="onAnswerClick($event)">{{getTriviaQuestions[currentQuestion].incorrect_answers[2]}}</button>
-        <button class="answer" @click="onAnswerClick($event)">{{getTriviaQuestions[currentQuestion].correct_answer}}</button>
+      <div id="multiple-choice" v-if="triviaQuestions[currentQuestion].type === 'multiple' ">
+        <p id="question" v-html="triviaQuestions[currentQuestion].question"></p> 
+        <button class="answer" @click="onAnswerClick($event)">{{triviaQuestions[currentQuestion].incorrect_answers[0]}}</button>
+        <button class="answer" @click="onAnswerClick($event)">{{triviaQuestions[currentQuestion].incorrect_answers[1]}}</button>
+        <button class="answer" @click="onAnswerClick($event)">{{triviaQuestions[currentQuestion].incorrect_answers[2]}}</button>
+        <button class="answer" @click="onAnswerClick($event)">{{triviaQuestions[currentQuestion].correct_answer}}</button>
       </div>
       <div id="trueFalse" v-else>
-        <p id="question" v-html="getTriviaQuestions[currentQuestion].question"></p> 
-        <button class="answer" @click="onAnswerClick($event)">{{getTriviaQuestions[currentQuestion].incorrect_answers[0]}}</button>
-        <button class="answer" @click="onAnswerClick($event)">{{getTriviaQuestions[currentQuestion].correct_answer}}</button>
+        <p id="question" v-html="triviaQuestions[currentQuestion].question"></p> 
+        <button class="answer" @click="onAnswerClick($event)">{{triviaQuestions[currentQuestion].incorrect_answers[0]}}</button>
+        <button class="answer" @click="onAnswerClick($event)">{{triviaQuestions[currentQuestion].correct_answer}}</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   name: "QuestionScreen",
   components:{
@@ -35,18 +35,18 @@ export default {
     onAnswerClick(event){
       this.currentQuestion++;
       this.addAnswer(event.target.value);
-      if(this.currentQuestion == this.getTriviaQuestions.length){
+      if(this.currentQuestion == this.triviaQuestions.length){
         console.log("its over");
         this.$router.push("/result");
       }
     }
   },
   computed: {
-    ...mapGetters(["getTriviaQuestions"]),
+    ...mapState(["triviaQuestions"])
   },
  
   created() { 
-    console.log(this.getTriviaQuestions);
+    console.log(this.triviaQuestions);
   }
 }
 </script>
