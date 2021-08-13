@@ -12,15 +12,11 @@ export default new Vuex.Store({
         difficulty: "",
         category: -1,
         numberOfQuestions: 0,
-        categories: [],
-        headerText: ""
+        categories: []
     },
     mutations: {
         setTriviaQuestions: (state, payload) => {
             state.triviaQuestions = payload;
-        },
-        setHeaderText: (state, payload) => {
-            state.headerText = payload;
         },
         setCategories: (state, payload) => {
             state.categories = payload;
