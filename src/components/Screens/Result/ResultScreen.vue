@@ -18,7 +18,7 @@
         <tr v-for="(question, index) of triviaQuestions" :key="index">
           <td class="table-question" v-html="question.question"/>
           <td class="table-correct" v-html="question.correct_answer"/>
-          <td :class="[isAnswerCorrect(index) ? 'correct' : 'wrong','question-text','grid-item']" v-html="answers[index]"/>
+          <td :class="[isAnswerCorrect(index) ? 'correct' : 'wrong','question-text']" v-html="answers[index]"/>
         </tr>
       </table>
     </div>
@@ -34,16 +34,31 @@ export default {
   name: "ResultScreen",
   methods: {
     ...mapMutations(["resetStore", "emptyAnswers"]),
+    /**
+     * Triggers when the user clicks the restart button,
+     * This empties previously entered answer data and
+     * redirects to the trivia page.
+     */
     onRestartClick(event) {
       this.emptyAnswers(event.target.value);
       this.$router.push("/trivia");
     },
+    /**
+     * Triggers when the user clicks the home button,
+     * This resets previous data that the user has entered
+     * and then redirects to the home page.
+     */
     onHomeClick(event) {
       this.resetStore(event.target.value);
       this.emptyAnswers(event.target.value);
       this.$router.push("/");
     },
   },
+  /**
+   * Checks that a user has entered a name,
+   * this is simply done for redirection to the home screen, 
+   * incase the user has entered from a wrong endpoint.
+   */
   created() {
     if (this.userName === "") {
       this.$router.push("/");

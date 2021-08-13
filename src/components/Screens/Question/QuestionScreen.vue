@@ -1,13 +1,22 @@
 <template>
-  <div class='question-screen'>
+  <div class="question-screen">
     <div class="question-body" v-if="triviaQuestions[currentQuestion]">
       <div class="question-header">
-        <h3>Question: {{currentQuestion+1}}</h3>        
-        <p class="question" v-html="triviaQuestions[currentQuestion].question"></p>
+        <h3>Question: {{ currentQuestion + 1 }}</h3>
+        <p
+          class="question"
+          v-html="triviaQuestions[currentQuestion].question"
+        ></p>
       </div>
       <div class="buttons">
         <div class="button-group">
-          <button v-for="question in currentQuestionAnswers" :key="question" class="answer" @click="onAnswerClick(question)" v-html="question"/>
+          <button
+            v-for="question in currentQuestionAnswers"
+            :key="question"
+            class="answer"
+            @click="onAnswerClick(question)"
+            v-html="question"
+          />
         </div>
       </div>
     </div>
@@ -18,56 +27,62 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   name: "QuestionScreen",
-  data: function() {
+  data: function () {
     return {
       currentQuestion: 0,
-      currentQuestionAnswers:[]
-    }
+      currentQuestionAnswers: [],
+    };
   },
   methods: {
     ...mapActions(["fetchQuestions"]),
     ...mapMutations(["addAnswer"]),
-    onAnswerClick(value){
+    onAnswerClick(value) {
       this.addAnswer(value);
       this.currentQuestion++;
-      if(this.currentQuestion === this.triviaQuestions.length){
+      if (this.currentQuestion === this.triviaQuestions.length) {
         this.$router.push("/result");
       }
       this.addAnswers();
     },
-    addAnswers(){
+    addAnswers() {
       let answers = [this.triviaQuestions[this.currentQuestion].correct_answer];
-      for(let i = 0; i < this.triviaQuestions[this.currentQuestion].incorrect_answers.length; ++i){
-        answers.push(this.triviaQuestions[this.currentQuestion].incorrect_answers[i]);
+      for (
+        let i = 0;
+        i < this.triviaQuestions[this.currentQuestion].incorrect_answers.length;
+        ++i
+      ) {
+        answers.push(
+          this.triviaQuestions[this.currentQuestion].incorrect_answers[i]
+        );
       }
       this.currentQuestionAnswers = answers;
-      this.currentQuestionAnswers.sort(() => (Math.random() > .5) ? 1: -1);
-    }
+      this.currentQuestionAnswers.sort(() => (Math.random() > 0.5 ? 1 : -1));
+    },
   },
   computed: {
-    ...mapState(["triviaQuestions", "userName", "answers"])
+    ...mapState(["triviaQuestions", "userName", "answers"]),
   },
-  watch:{
-    triviaQuestions: function(){
+  watch: {
+    triviaQuestions: function () {
       this.addAnswers();
-    }
+    },
   },
   created() {
-    if(this.userName === "") {
+    if (this.userName === "") {
       this.$router.push("/");
+    } else {
+      this.fetchQuestions();
     }
-    this.fetchQuestions();
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-
-.question-body{
+.question-body {
   overflow: hidden;
   border-radius: 10px;
   border: 2px solid black;
-  background-color: #8E4162;
+  background-color: #8e4162;
   position: fixed;
   width: 50%;
   top: 50%;
@@ -76,40 +91,39 @@ export default {
   transform: translateY(-50%);
   margin: auto;
 }
-.question-header{
+.question-header {
   overflow: hidden;
-  background-color: #A76E96;
+  background-color: #a76e96;
   padding: 20px 10px;
 }
-.question-header h3{
+.question-header h3 {
   font-size: 30px;
   color: #ffffff;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
-.question{
+.question {
   color: #ffffff;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-size: 20px;
   font-weight: 500;
 }
-.button-group button{
-  background-color: #ffffff; 
-  padding:16px 31px;
-  color: #000000; 
+.button-group button {
+  background-color: #ffffff;
+  padding: 16px 31px;
+  color: #000000;
   cursor: pointer;
   width: 100%;
-  
+
   margin-top: 5%;
-  display: inline-block; 
+  display: inline-block;
   font-size: 32px;
 }
 
-.buttons{
+.buttons {
   width: 70%;
   margin-left: 15%;
   margin-right: auto;
   margin-top: 4%;
   margin-bottom: 5%;
 }
-
 </style>
