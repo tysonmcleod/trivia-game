@@ -69,6 +69,11 @@ export default {
       "setName",
     ]),
 
+/**
+ * Triggers when the start button is pressed. Checks if all fields are correctly
+ * set and redirects to the trivia component, otherwise alerts the user
+ *  with what fields still need to be filled.
+ */
     onStartClick() {
       if (
         this.userName !== "" &&
@@ -89,6 +94,11 @@ export default {
     onNameChange(event) {
       this.setName(event.target.value.trim());
     },
+    /**
+     * Fires up when the user changes the number of questions.
+     * If the user enters an invalid value, then it gets reformatted
+     * into a proper value.
+     */
     onNumberOfQuestionsChange(event) {
       let questions = event.target.value;
       questions = questions > 50 ? 50 : questions < 1 ? 1 : questions;
