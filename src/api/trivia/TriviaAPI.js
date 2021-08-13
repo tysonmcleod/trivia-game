@@ -14,7 +14,7 @@ export const TriviaAPI = {
     },
     async fetchQuestions(preferences) {
         let API_URL = BASE_URL + (preferences[0]) + ((preferences[1] !== -1) ?
-            ("&category=") + (preferences[1]) : "") + ("&difficulty=") + (preferences[2] + "&encode=base64");
+            "&category=" + preferences[1] : "") + ("&difficulty=") + (preferences[2] + "&encode=base64");
         try {
             const response = await fetch(API_URL);
             const questions = await response.json();

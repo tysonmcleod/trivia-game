@@ -1,39 +1,49 @@
 <template>
   <div id="startScreen">
     <div class="sc-header">
-      <h3> Welcome to QuizGame Deluxe </h3>
+      <h3>Welcome to QuizGame Deluxe</h3>
     </div>
     <div class="form">
       <div class="form-group">
         <label>Name</label>
-        <input id="name" @input="onNameChange" type="text" placeholder="Your name.."/>
+        <input
+          id="name"
+          @input="onNameChange"
+          type="text"
+          placeholder="Your name.."
+        />
       </div>
       <div class="form-group">
         <label>Difficulty</label>
         <select @change="onDifficultyChange">
-        <option disabled selected>Select a difficulty</option>
-        <option v-for="difficulty in difficulties" :key="difficulty">
-          {{ difficulty }}
-        </option>
-      </select> 
+          <option disabled selected>Select a difficulty</option>
+          <option v-for="difficulty in difficulties" :key="difficulty">
+            {{ difficulty }}
+          </option>
+        </select>
       </div>
-      <div class="form-group"> 
+      <div class="form-group">
         <label>Category</label>
         <select @change="onCategoryChange">
-        <option disabled selected>Select a difficulty</option>
-        <option selected :value="-1">Mixed</option>
-        <option
-          v-for="category in categories"
-          :value="category.id"
-          :key="category.id"
-        >
-          {{ category.name }}
-        </option>
+          <option disabled selected>Select a difficulty</option>
+          <option :value="-1">Mixed</option>
+          <option
+            v-for="category in categories"
+            :value="category.id"
+            :key="category.id"
+          >
+            {{ category.name }}
+          </option>
         </select>
       </div>
       <div class="form-group">
         <label>Number of Questions</label>
-        <input @input="onNumberOfQuestionsChange" type="number" min="1" max="50" />
+        <input
+          @input="onNumberOfQuestionsChange"
+          type="number"
+          min="1"
+          max="50"
+        />
       </div>
       <button @click="onStartClick">Start Game</button>
     </div>
@@ -56,7 +66,7 @@ export default {
       "setDifficulty",
       "setCategory",
       "setNumberOfQuestions",
-      "setName"
+      "setName",
     ]),
 
     onStartClick() {
@@ -71,9 +81,7 @@ export default {
           "You need to enter data for the following fields:" +
           (this.userName === "" ? "\nName" : "") +
           (this.difficulty === "" ? "\nDifficulty" : "") +
-          (this.numberOfQuestions === 0
-            ? "\nNumber of Questions"
-            : "");
+          (this.numberOfQuestions === 0 ? "\nNumber of Questions" : "");
 
         alert(message);
       }
@@ -103,10 +111,10 @@ export default {
 </script>
 
 <style>
-#startScreen{
+#startScreen {
   border-radius: 10px;
   border: 2px solid black;
-  background-color: #8E4162;
+  background-color: #8e4162;
   position: fixed;
   width: 50%;
   top: 50%;
@@ -117,60 +125,62 @@ export default {
   overflow: hidden;
 }
 
-.sc-header h3{
-  font-family: 'Courier New', monospace;
+.sc-header h3 {
+  font-family: "Courier New", monospace;
   margin: 5% 0;
   text-transform: uppercase;
-  font: 700 32px 'Comfortaa', sans-serif;
+  font: 700 32px "Comfortaa", sans-serif;
   letter-spacing: 4px;
-  color:#ffffff;
+  color: #ffffff;
   text-align: center;
 }
 
-.form{
+.form {
   width: 70%;
-  margin-left:15%;
-  margin-top:10%;
+  margin-left: 15%;
+  margin-top: 10%;
   margin-bottom: 10%;
 }
-.form-group{
+.form-group {
   border-radius: 30px;
   padding: 3%;
-  margin-bottom:3%;
+  margin-bottom: 3%;
   font-size: 20px;
   font-weight: 600;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
   text-align: center;
 }
 
-.form-group label{
+.form-group label {
   display: inline-block;
   font-size: 20px;
   font-weight: 600;
   color: #ffffff;
 }
 
-input[type=text], select, input[type=number] {
+input[type="text"],
+select,
+input[type="number"] {
   width: 100%;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  padding:2% 1%;
+  padding: 2% 1%;
 }
 
-.form button{
-  background-color: #ffffff; 
-  padding:16px 31px;
+.form button {
+  background-color: #ffffff;
+  padding: 16px 31px;
   color: #000000;
-  margin-top:10px;
+  margin-top: 10px;
   cursor: pointer;
   width: 70%;
   margin-left: 15%;
-  display: inline-block; 
+  display: inline-block;
   font-size: 20px;
   font-weight: 600;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
 }
 </style>

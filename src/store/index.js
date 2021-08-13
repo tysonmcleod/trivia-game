@@ -22,7 +22,7 @@ export default new Vuex.Store({
             state.categories = payload;
         },
         setCategory: (state, payload) => {
-            state.category = payload;
+            state.category = parseInt(payload, 10);
         },
         addAnswer: (state, payload) => {
             state.answers.push(payload);
