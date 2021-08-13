@@ -33,7 +33,7 @@ import { mapGetters, mapMutations, mapState } from "vuex";
 export default {
   name: "ResultScreen",
   methods: {
-    ...mapMutations(["resetStore", "emptyAnswers", "setHeaderText"]),
+    ...mapMutations(["resetStore", "emptyAnswers"]),
     onRestartClick(event) {
       this.emptyAnswers(event.target.value);
       this.$router.push("/trivia");
@@ -48,11 +48,6 @@ export default {
     if (this.userName === "") {
       this.$router.push("/");
     }
-    this.setHeaderText(
-      `Congratulations! You scored ${this.getPoints} / ${
-        this.triviaQuestions.length * 10
-      } points`
-    );
   },
   computed: {
     ...mapState([

@@ -56,8 +56,7 @@ export default {
       "setDifficulty",
       "setCategory",
       "setNumberOfQuestions",
-      "setName",
-      "setHeaderText",
+      "setName"
     ]),
 
     onStartClick() {
@@ -99,7 +98,6 @@ export default {
   },
   created() {
     this.fetchCategories();
-    this.setHeaderText("Welcome to QuizGame Deluxe");
   },
 };
 </script>
