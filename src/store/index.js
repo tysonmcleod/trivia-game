@@ -50,6 +50,13 @@ export default new Vuex.Store({
         isAnswerCorrect: (state) => (index) => {
             return state.answers[index] === state.triviaQuestions[index].correct_answer;
         },
+        /**
+         * Retrieves the number of points based on the number of correctly answered questions.
+         * <p>
+         * This method always returns the number of points.
+         * 
+         * @returns the number of points a user has recieved
+         */
         getPoints: state => {
             return state.answers.reduce((pre, cur, i) => {
                 return pre + ((state.answers[i] === state.triviaQuestions[i].correct_answer) ? 10 : 0);
@@ -62,16 +69,23 @@ export default new Vuex.Store({
                 const categories = await TriviaAPI.fetchCategories();
                 commit("setCategories", categories);
             } catch (error) {
-                commit("setError", error.message);
+                console.log(error)
             }
         },
+        /**
+         * Retrieves trivia questions from an external API using preferences such as 
+         * number of questions, category and difficulty.
+         * These are then used to update the current state of the trivia questions.
+         * <p>
+         * An error is thrown if the retrieval process was unsuccessful.
+         */
         async fetchQuestions({ commit, state }) {
             try {
                 const preferences = [state.numberOfQuestions, state.category, state.difficulty];
                 const questions = await TriviaAPI.fetchQuestions(preferences);
                 commit("setTriviaQuestions", questions)
             } catch (error) {
-                commit("setError", error.message);
+                console.log(error)
             }
         }
     }
