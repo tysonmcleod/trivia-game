@@ -1,5 +1,5 @@
 <template>
-  <div class="question-screen">
+  <div class="question-screen" v-if="triviaQuestions[currentQuestion]">
     <div class="question-header">
         <h1>Question: {{ currentQuestion + 1 }}</h1>
         <p
@@ -7,7 +7,7 @@
           v-html="triviaQuestions[currentQuestion].question"
         ></p>
     </div>
-    <div class="question-body" v-if="triviaQuestions[currentQuestion]">
+    <div class="question-body">
       <div class="buttons">
         <div class="button-group">
           <button
@@ -126,7 +126,7 @@ export default {
 .question {
   color: #000000;
   font-family: "Courier New", monospace;
-  font-size: 28px;
+  font-size: calc(22px + 1vw);
   font-weight: 500;
 }
 .button-group button{
@@ -136,12 +136,13 @@ export default {
   cursor: pointer;
   width: 100%;
   display: inline-block;
-  font-size: 20px;
+  font-size: calc(12px + 1vw);
   font-weight: 600;
   font-family: 'Courier New', monospace;
   letter-spacing: 4px;
   border-radius: 10px;
-  text-transform: uppercase;  
+  word-wrap: break-word;
+  
 }
 
 .buttons {
