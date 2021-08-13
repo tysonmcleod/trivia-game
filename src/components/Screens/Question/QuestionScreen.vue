@@ -36,6 +36,13 @@ export default {
   methods: {
     ...mapActions(["fetchQuestions"]),
     ...mapMutations(["addAnswer"]),
+    /**
+     * Triggers when the user clicks an answer. This 
+     * then increments the index used to retrieve the
+     * current question. If all questions have been 
+     * answered, the user is redirected to the home page,
+     * otherwise, the next set of answers are retrieved. 
+     */
     onAnswerClick(value) {
       this.addAnswer(value);
       this.currentQuestion++;
@@ -45,6 +52,12 @@ export default {
         this.addAnswers();
       }
     },
+     /**
+     * This method is used to retrieve the next set of 
+     * questions for the current question. The method 
+     * does this buy adding the correct, and incorrect answers
+     * to a list which is then sorted at random. 
+     */
     addAnswers() {
       let answers = [this.triviaQuestions[this.currentQuestion].correct_answer];
       for (
@@ -68,6 +81,12 @@ export default {
       this.addAnswers();
     },
   },
+  /**
+   * Checks if a user has entered a name. If not, they are
+   * redirected to the home screen. If they have entered a name, 
+   * the questions are fetched. This is done incase the user
+   * has entered from an incorrect endpoint.
+   */
   created() {
     if (this.userName === "") {
       this.$router.push("/");
