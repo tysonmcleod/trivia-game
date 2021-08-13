@@ -1,11 +1,8 @@
 # TriviaGame
 Creating a trivia game using Vue.js
 
-To fetch data from the Vuex store the following code can be used:
-* this.$store.state.difficulty
-* this.$store.state.category
-* this.$store.state.numberOfQuestions
-
+## Heroku
+[The most current version can be viewed here](https://trivia-app-quiz-game-deluxe.herokuapp.com/)
 ## Project setup
 ```
 npm install
