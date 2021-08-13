@@ -5,8 +5,10 @@
         <h3>Question: {{currentQuestion+1}}</h3>        
         <p class="question" v-html="triviaQuestions[currentQuestion].question"></p>
       </div>
-      <div class="button-group">
-        <button v-for="question in currentQuestionAnswers" :key="question" class="answer" @click="onAnswerClick(question)" v-html="question"/>
+      <div class="buttons">
+        <div class="button-group">
+          <button v-for="question in currentQuestionAnswers" :key="question" class="answer" @click="onAnswerClick(question)" v-html="question"/>
+        </div>
       </div>
     </div>
   </div>
@@ -60,21 +62,23 @@ export default {
 </script>
 
 <style scoped>
-.question-screen{
-  padding: 0;
-}
+
 .question-body{
-  background-color: #f2e8e8;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 2px solid black;
+  background-color: #8E4162;
   position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   width: 50%;
-  height: 50%;
+  top: 50%;
+  left: 0px;
+  right: 0px;
+  transform: translateY(-50%);
+  margin: auto;
 }
 .question-header{
   overflow: hidden;
-  background-color: #F37676;
+  background-color: #A76E96;
   padding: 20px 10px;
 }
 .question-header h3{
@@ -94,11 +98,18 @@ export default {
   color: #000000; 
   cursor: pointer;
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  
   margin-top: 5%;
   display: inline-block; 
   font-size: 32px;
+}
+
+.buttons{
+  width: 70%;
+  margin-left: 15%;
+  margin-right: auto;
+  margin-top: 4%;
+  margin-bottom: 5%;
 }
 
 </style>
