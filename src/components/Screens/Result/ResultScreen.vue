@@ -1,12 +1,12 @@
 <template>
   <div class="result-screen">
-    <div v-if="this.getPoints === 0" class="result-header">
-      <h3> You scored {{this.getPoints}} / {{
-        this.triviaQuestions.length * 10}} points </h3>
+    <div v-if="this.getPoints === 0" class="result-header animate__animated animate__backInLeft">
+      <h1> You scored {{this.getPoints}} / {{
+        this.triviaQuestions.length * 10}} points </h1>
     </div>
-    <div v-else class="result-header">
-      <h3> Congratulations {{this.userName}}! You scored {{this.getPoints}} / {{
-        this.triviaQuestions.length * 10}} points </h3>
+    <div v-else class="result-header animate__animated animate__backInLeft">
+      <h1> Congratulations {{this.userName}}! You scored {{this.getPoints}} / {{
+        this.triviaQuestions.length * 10}} points </h1>
     </div>
     <div class="results">
       <table class="result-container" >
@@ -22,8 +22,11 @@
         </tr>
       </table>
     </div>
-    <button id="home-button" @click="onHomeClick">Home</button>
-    <button id="restart-button" @click="onRestartClick">Restart Game</button>
+    <div class="rs-button animate__animated animate__backInUp">
+      <button id="home-button" @click="onHomeClick">Home</button>
+      <button id="restart-button" @click="onRestartClick">Restart</button>
+    </div>
+    
   </div>
 </template>
 <script>
@@ -79,38 +82,27 @@ export default {
 <style scoped>
 
 .result-screen{
-  border-radius: 10px;
-  border: 2px solid black;
-  background-color: #8E4162;
   position: fixed;
-  width: 50%;
+  left: 50%;
   top: 50%;
-  left: 0px;
-  right: 0px;
-  transform: translateY(-50%);
-  margin: auto;
-  overflow:hidden;
+  transform: translate(-50%, -50%); 
 }
 
-.result-header{
-  overflow: hidden;
-  background-color: #A76E96;
-  padding: 20px 10px;
-}
-
-.result-header h3{
-  font-size: 30px;
-  color: #ffffff;
-  font-family: 'Courier New', monospace;
+.result-header h1{
   text-align: center;
+  color: #000000;
+  font-family: 'Courier New', monospace;
+  margin: 10px 0;
+  font: 700 'Comfortaa', sans-serif;
+  margin-bottom: 30px;
+  font-size: calc(32px + 1vw);
 }
+
 
 .results{
   overflow-y: auto;
-  height:40vh;
-  padding: 5%;
-  margin-top: 20px;
-  margin-bottom:20px;
+  max-height: 500px;
+  border: 2px solid #000000;
 }
 
 .correct,
@@ -122,14 +114,11 @@ export default {
 }
 
 .correct {
-  background-color: lightgreen;
+  background-color: #a1e678;
 }
 .wrong {
-  background-color: crimson;
+  background-color: #e97c70;
   color: white;
-}
-.question-text {
-  font-size: 18px;
 }
 
 table {
@@ -137,31 +126,47 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
+  padding: 20px;
   border: 1px solid #ddd;  
 }
 
 th, td {
-  text-align: left;
+  text-align: center;
   border: 1px solid black;
   padding: 8px;
+  height: 20px;
+  font-family: "Courier New", monospace;
+  font-size: calc(12px + 1vw);
+  font-weight: 500;
 }
 
 tr:nth-child(even){background-color: #f2f2f2}
-
-.result-screen button{
-  background-color:#ffffff;
+.rs-button{
+  width: 100%;
+  margin-top:10px;
+}
+.rs-button button{
+  border: 2px solid #000000;
+  background-color: #fff;
   padding: 16px 31px;
-  color:#000000;
+  color: #000;
   cursor: pointer;
-  width: 35%;
+  width: 50%;
   display: inline-block;
   margin-bottom: 3%;
+  font-size: calc(12px + 1vw);
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 4px;
+  border-radius: 10px;
+  word-wrap: break-word;
 }
 
 #home-button{
-  margin-left: 15%;
+  background-color: #E5C1BD;
 }
+
 #restart-button{
-  margin-right: 15%;
+  background-color: #D2D0BA;
 }
 </style>
