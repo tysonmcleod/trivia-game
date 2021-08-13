@@ -1,19 +1,19 @@
 <template>
   <div class="question-screen">
-    <div class="question-body" v-if="triviaQuestions[currentQuestion]">
-      <div class="question-header">
-        <h3>Question: {{ currentQuestion + 1 }}</h3>
+    <div class="question-header">
+        <h1>Question: {{ currentQuestion + 1 }}</h1>
         <p
           class="question"
           v-html="triviaQuestions[currentQuestion].question"
         ></p>
-      </div>
+    </div>
+    <div class="question-body" v-if="triviaQuestions[currentQuestion]">
       <div class="buttons">
         <div class="button-group">
           <button
-            v-for="question in currentQuestionAnswers"
+            v-for="(question,idx) in currentQuestionAnswers"
             :key="question"
-            class="answer"
+            :class="`answer_${idx}`"
             @click="onAnswerClick(question)"
             v-html="question"
           />
@@ -98,45 +98,50 @@ export default {
 </script>
 
 <style scoped>
-.question-body {
-  overflow: hidden;
-  border-radius: 10px;
-  border: 2px solid black;
-  background-color: #8e4162;
+.question-screen {
   position: fixed;
-  width: 50%;
+  left: 50%;
   top: 50%;
-  left: 0px;
-  right: 0px;
-  transform: translateY(-50%);
-  margin: auto;
+  transform: translate(-50%, -50%); 
 }
-.question-header {
-  overflow: hidden;
-  background-color: #a76e96;
-  padding: 20px 10px;
+
+
+.question-header h1 {
+  text-align: center;
+  color: #000000;
+  font-family: 'Courier New', monospace;
+  margin: 10px 0;
+  text-transform: uppercase;
+  font: 700 48px 'Comfortaa', sans-serif;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
 }
-.question-header h3 {
-  font-size: 30px;
-  color: #ffffff;
-  font-family: "Courier New", monospace;
+
+.question-header p{
+  text-align: center;
+  color: #000000;
+  width: 70%;
+  margin-left:15%;
 }
 .question {
-  color: #ffffff;
+  color: #000000;
   font-family: "Courier New", monospace;
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 500;
 }
-.button-group button {
-  background-color: #ffffff;
+.button-group button{
   padding: 16px 31px;
-  color: #000000;
+  color: #000;
+  margin-top: 15px;
   cursor: pointer;
   width: 100%;
-
-  margin-top: 5%;
   display: inline-block;
-  font-size: 32px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 4px;
+  border-radius: 10px;
+  text-transform: uppercase;  
 }
 
 .buttons {
@@ -145,5 +150,18 @@ export default {
   margin-right: auto;
   margin-top: 4%;
   margin-bottom: 5%;
+}
+
+.answer_0{
+  background-color: #E5C1BD;
+}
+.answer_1{
+  background-color: #D2D0BA;
+}
+.answer_2{
+  background-color: #B6BE9C;
+}
+.answer_3{
+  background-color: #7B9E87;
 }
 </style>
